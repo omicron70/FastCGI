@@ -207,15 +207,15 @@ namespace FastCGI
             var record = Record.CreateEndRequest(RequestId);
             record.Send(ResponseStream);
 
-            if (!KeepAlive)
-                ResponseStream.Close();
-
             if (ManagingApp != null)
             {
                 ManagingApp.RequestClosed(this);
                 if (!KeepAlive)
                     ManagingApp.ConnectionClosed(ResponseStream as FCGIStream);
             }
+
+			if (!KeepAlive)
+				ResponseStream.Close();
         }
 
     }
